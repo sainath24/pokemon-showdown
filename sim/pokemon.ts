@@ -1017,12 +1017,19 @@ export class Pokemon {
 			details: this.details,
 			condition: this.getHealth().secret,
 			active: (this.position < this.side.active.length),
+// 			stats: {
+// 				atk: this.baseStoredStats['atk'],
+// 				def: this.baseStoredStats['def'],
+// 				spa: this.baseStoredStats['spa'],
+// 				spd: this.baseStoredStats['spd'],
+// 				spe: this.baseStoredStats['spe'],
+// 			},
 			stats: {
-				atk: this.baseStoredStats['atk'],
-				def: this.baseStoredStats['def'],
-				spa: this.baseStoredStats['spa'],
-				spd: this.baseStoredStats['spd'],
-				spe: this.baseStoredStats['spe'],
+				atk: this.getStat('atk'),
+				def: this.getStat('def'),
+				spa: this.getStat('spa'),
+				spd: this.getStat('spd'),
+				spe: this.getStat('spe'),
 			},
 			moves: this[forAlly ? 'baseMoves' : 'moves'].map(move => {
 				if (move === 'hiddenpower') {
