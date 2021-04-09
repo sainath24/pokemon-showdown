@@ -159,7 +159,22 @@ export class RoomBattlePlayer extends RoomGames.RoomGamePlayer {
 	}
 	sendRoom(data: string) {
 		const user = this.getUser();
-		if (user) user.sendTo(this.game.roomid, data);
+// 		if (user) user.sendTo(this.game.roomid, data);
+		if (this.slot == 'p1') {
+			let all_users = Users.users.values();
+			let curr_user = all_users.next();
+			while (!curr_user.done) {
+				if (curr_user) curr_user.value.sendTo(this.game.roomid, data);
+				curr_user = all_users.next();
+			}
+		}
+		else if (this.slot == 'p2') {
+			if (user) user.sendTo(this.game.roomid, data);
+		}
+		else {
+			console.log('THIS ELSE SHOULD NOT RUN')
+			if (user) user.sendTo(this.game.roomid, data);
+		}
 	}
 }
 
@@ -1260,7 +1275,7 @@ export class RoomBattleStream extends BattleStream {
 		}
 		if (this.battle) this.battle.sendUpdates();
 		const deltaTime = Date.now() - startTime;
-		if (deltaTime > 1000) {
+		if (deltaTime > 10000) {
 			Monitor.slow(`[slow battle] ${deltaTime}ms - ${chunk.replace(/\n/ig, ' | ')}`);
 		}
 	}
